@@ -1,5 +1,5 @@
 let taskInput;
-let list = document.getElementById("list");
+let toDolistItems = document.getElementById("list-items");
 let num = 0;
 let listOfTasks = [];
 
@@ -10,7 +10,7 @@ function displayList() {
     !listOfTasks.includes(taskInput.value.trim())
   ) {
     listOfTasks.push(taskInput.value.trim());
-    list.appendChild(createTodoItem(taskInput.value.trim()));
+    toDolistItems.appendChild(createTodoItem(taskInput.value.trim()));
     taskInput.value = "";
     num += 1;
   } else if (listOfTasks.includes(taskInput.value.trim())) {
@@ -22,35 +22,38 @@ function displayList() {
   }
 }
 
-list.addEventListener("click", (e) => {
+toDolistItems.addEventListener("click", (e) => {
   if (e.target.classList.contains("todo-item")) {
     e.target.classList.toggle("strike");
   }
 });
 
 const createTodoItem = (value) => {
-  const div = document.createElement("li");
-  const words = value
+  let newlist = document.createElement("li");
+  let words = value
     .toLowerCase()
     .split(" ")
     .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
     .join(" ");
-  div.classList.add("todo-item");
-  let divName = "Item" + num;
-  div.setAttribute("id", divName);
+  newlist.classList.add("todo-item");
+  let individualItemId = "Item" + num;
+  newlist.setAttribute("id", individualItemId);
   let removeButton = document.createElement("button");
   removeButton.setAttribute("class", "deleteButton");
   removeButton.innerHTML = "Remove";
   removeButton.onclick = function () {
-    removeDiv(divName);
+    removeDiv(individualItemId);
   };
-  div.textContent = words;
-  div.appendChild(removeButton);
-  return div;
+  newlist.textContent = words;
+  newlist.appendChild(removeButton);
+  return newlist;
 };
 
-function removeDiv(divNum) {
-  var list = document.getElementById("list");
-  var childId = document.getElementById(divNum);
-  list.removeChild(childId);
+function removeDiv(individualItemId) {
+  let toDolistItems = document.getElementById("list-items");
+  let childId = document.getElementById(individualItemId);
+  console.log(childId.textContent);
+  toDolistItems.removeChild(childId);
+  listOfTasks = listOfTasks.filter((item) => item !== childId.textContent);
+  console.log(listOfTasks);
 }
