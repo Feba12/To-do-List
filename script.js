@@ -51,9 +51,17 @@ const createTodoItem = (value) => {
 
 function removeDiv(individualItemId) {
   let toDolistItems = document.getElementById("list-items");
-  let childId = document.getElementById(individualItemId);
-  console.log(childId.textContent);
-  toDolistItems.removeChild(childId);
-  listOfTasks = listOfTasks.filter((item) => item !== childId.textContent);
+  let particularItem = document.getElementById(individualItemId);
+  console.log(particularItem.textContent);
+  toDolistItems.removeChild(particularItem);
+  let words = particularItem.textContent
+    .toLowerCase()
+    .split(" ")
+    .map((s) => s.charAt(0).toLowerCase() + s.substring(1))
+    .join(" ");
+  console.log(words);
+  listOfTasks = listOfTasks.filter(
+    (item) => item !== words.replace("remove", "")
+  );
   console.log(listOfTasks);
 }
