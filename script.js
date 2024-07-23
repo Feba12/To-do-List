@@ -1,15 +1,24 @@
 let taskInput;
 let list = document.getElementById("list");
 let num = 0;
+let listOfTasks = [];
+
 function displayList() {
   let taskInput = document.getElementById("task-input-area");
-  if (taskInput.value.trim() != "") {
+  if (
+    taskInput.value.trim() != "" &&
+    !listOfTasks.includes(taskInput.value.trim())
+  ) {
+    listOfTasks.push(taskInput.value.trim());
     list.appendChild(createTodoItem(taskInput.value.trim()));
     taskInput.value = "";
     num += 1;
-  }
-  else{
+  } else if (listOfTasks.includes(taskInput.value.trim())) {
+    window.alert("Task already exists in the list!");
+    taskInput.value = "";
+  } else {
     window.alert("Enter a task!");
+    taskInput.value = "";
   }
 }
 
